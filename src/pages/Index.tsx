@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import HeroSection from '@/components/HeroSection';
 import SearchResults from '@/components/SearchResults';
@@ -6,6 +7,7 @@ import SearchResults from '@/components/SearchResults';
 const Index = () => {
   const [searchData, setSearchData] = useState(null);
   const [showResults, setShowResults] = useState(false);
+  const navigate = useNavigate();
 
   const handleSearch = (data: any) => {
     setSearchData(data);
@@ -21,8 +23,7 @@ const Index = () => {
   };
 
   const handleRoomSelect = (roomId: string) => {
-    console.log('Selected room:', roomId);
-    // Here you would navigate to room details or booking flow
+    navigate(`/room/${roomId}`);
   };
 
   return (
