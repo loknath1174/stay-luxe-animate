@@ -1,12 +1,49 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import HeroSection from '@/components/HeroSection';
+import SearchResults from '@/components/SearchResults';
 
 const Index = () => {
+  const [searchData, setSearchData] = useState(null);
+  const [showResults, setShowResults] = useState(false);
+
+  const handleSearch = (data: any) => {
+    setSearchData(data);
+    setShowResults(true);
+    
+    // Smooth scroll to results
+    setTimeout(() => {
+      const resultsElement = document.getElementById('search-results');
+      if (resultsElement) {
+        resultsElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
+  const handleRoomSelect = (roomId: string) => {
+    console.log('Selected room:', roomId);
+    // Here you would navigate to room details or booking flow
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <HeroSection onSearch={handleSearch} />
+      
+      {/* Search Results */}
+      {showResults && (
+        <motion.div
+          id="search-results"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <SearchResults 
+            searchData={searchData} 
+            onRoomSelect={handleRoomSelect}
+          />
+        </motion.div>
+      )}
     </div>
   );
 };
